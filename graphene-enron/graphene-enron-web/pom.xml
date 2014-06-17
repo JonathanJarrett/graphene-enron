@@ -187,10 +187,6 @@
     </dependency>
     <dependency>
       <groupId>${base.project.groupId}</groupId>
-      <artifactId>graphene-dao</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>${base.project.groupId}</groupId>
       <artifactId>graphene-export</artifactId>
       <type>jar</type>
     </dependency>
