@@ -18,8 +18,8 @@ Ext.define('GTransaction', {
 	    {name: 'credit'},
 	    {name: 'senderId'},
 	    {name: 'receiverId'},	    
-	    {name: 'acname_sender'},
-	    {name: 'acname_receiver'},	    
+	    {name: "senderValue", mapping: "data.senderValue"},
+	    {name: 'receiverValue', mapping: "data.receiverValue"},	    
    	    {name: 'amount',
     	     	convert:function(value,record) { return record.get('debit') == 0 ? record.get('credit') : record.get('debit'); }
     	    }
@@ -65,8 +65,8 @@ Ext.define("DARPA.TransfersGrid",  {
         align:'left',
 	columns: [
 		{header: 'Date',        width:80,  dataIndex: 'date', sortable:true}, 					// 0
-		{header: 'From', width:240, dataIndex: 'acname_sender', sortable:true},// 1	
-		{header: 'To',   width:240, dataIndex: 'acname_receiver', sortable:true},// 1				
+		{header: 'From', width:240, dataIndex: 'senderValue', sortable:true},// 1	
+		{header: 'To',   width:240, dataIndex: 'receiverValue', sortable:true},// 1				
 		{header: 'Size ',   	width:100, dataIndex: 'amount',      align:'right', sortable:true}
 	],
         
@@ -219,8 +219,8 @@ Ext.define("DARPA.TransfersGrid",  {
         // csFlag       - true = case sensitive, else case INsensitive match
         gridFilter: function (item, filterVal, csFlag) {                        
             var sdate = item.get('date').toString();
-            var sfrom = item.get('acname_sender');
-            var sto = item.get('acname_receiver');
+            var sfrom = item.get('senderValue');
+            var sto = item.get('receiverValue');
             var samt = item.get('amount').toString(); 
             var dateMatch, fromMatch, toMatch, amtMatch;
             
@@ -477,8 +477,8 @@ function makeTransferStore(grid)
                             var x = records[i];
                             d.push(
                                     {
-                                            source:""+x.acname_sender,
-                                            target:""+x.acname_receiver,
+                                            source:""+x.data.senderValue,
+                                            target:""+x.data.receiverValue,
                                             time:x.dateMilliSeconds
                                     }
                             );

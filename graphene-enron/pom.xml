@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>graphene-enron</groupId>
-  <artifactId>graphene-enron</artifactId>
-  <version>4.0.6-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <modules>
-    <module>graphene-enron-ingest</module>
-    <module>graphene-enron-web</module>
-  </modules>
-  <properties>
-    <customer>ENRON</customer>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- properties for dependencies (usually versions) -->
-    <base.project.version>4.0.6-SNAPSHOT</base.project.version>
-    <base.project.groupId>graphene</base.project.groupId>
-    <!-- properties for dependencies for web frameworks -->
-    <resteasy.version>3.0.1.Final</resteasy.version>
-    <tapestry-release-version>5.3.7</tapestry-release-version>
-    <tynamo-version>0.5.0</tynamo-version>
-    <!-- properties for dependencies involving databases -->
-    <solr.version>4.2.0</solr.version>
-    <bonecp.version>0.8.0.RELEASE</bonecp.version>
-    <neo4j.version>2.0.0</neo4j.version>
-    <querydsl.version>3.3.1</querydsl.version>
-    <!-- properties for dependencies that are utilities -->
-    <jackson2.version>2.2.1</jackson2.version>
-    <!-- <jackson2.version>2.3.0</jackson2.version> 2.3.0 does not work with 
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>graphene-enron</groupId>
+	<artifactId>graphene-enron</artifactId>
+	<version>4.0.7-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>graphene-enron-ingest</module>
+		<module>graphene-enron-web</module>
+	</modules>
+	<properties>
+		<customer>ENRON</customer>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- properties for dependencies (usually versions) -->
+
+		<base.project.version>4.0.7-SNAPSHOT</base.project.version>
+		<base.project.groupId>graphene</base.project.groupId>
+
+
+		<!-- properties for dependencies for web frameworks -->
+		<resteasy.version>3.0.1.Final</resteasy.version>
+		<tapestry-release-version>5.3.7</tapestry-release-version>
+		<tynamo-version>0.5.0</tynamo-version>
+
+		<!-- properties for dependencies involving databases -->
+		<solr.version>4.2.0</solr.version>
+		<bonecp.version>0.8.0.RELEASE</bonecp.version>
+		<neo4j.version>2.0.0</neo4j.version>
+		<querydsl.version>3.3.1</querydsl.version>
+
+		<!-- properties for dependencies that are utilities -->
+		<jackson2.version>2.2.1	</jackson2.version>
+		<!-- <jackson2.version>2.3.0</jackson2.version> 2.3.0 does not work with 
 			resteasy 3.0.5.Final or 3.0.6.Final. -->
     <joda-time.version>2.3</joda-time.version>
     <opencsv.version>2.3</opencsv.version>
@@ -683,36 +690,55 @@
             <requestLog implementation="org.mortbay.jetty.NCSARequestLog">
               <!-- This doesn't do anything for Jetty, but is a workaround for a 
 								Maven bug that prevents the requestLog from being set. -->
-              <append>true</append>
-            </requestLog>
-            <systemProperties>
-              <systemProperty>
-                <name>tapestry.execution-mode</name>
-                <value>development</value>
-              </systemProperty>
-            </systemProperties>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9</version>
-        <configuration>
-          <failOnError>false</failOnError>
-          <dependencySourceExcludes>com.trsvax.bootstrap:*</dependencySourceExcludes>
-          <taglet>org.apache.tapestry5.javadoc.TapestryDocTaglet</taglet>
-          <tagletArtifact>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-javadoc</artifactId>
-            <version>${tapestry-release-version}</version>
-          </tagletArtifact>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
+							<append>true</append>
+						</requestLog>
+						<systemProperties>
+							<systemProperty>
+								<name>tapestry.execution-mode</name>
+								<value>development</value>
+							</systemProperty>
+						</systemProperties>
+					</configuration>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+		
+		<plugins>
+			<!-- enforce inclusion of source plugin to all children of Graphene-Enron -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<failOnError>false</failOnError>
+					<dependencySourceExcludes>com.trsvax.bootstrap:*</dependencySourceExcludes>
+					<taglet>org.apache.tapestry5.javadoc.TapestryDocTaglet</taglet>
+					<tagletArtifact>
+						<groupId>org.apache.tapestry</groupId>
+						<artifactId>tapestry-javadoc</artifactId>
+						<version>${tapestry-release-version}</version>
+					</tagletArtifact>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
